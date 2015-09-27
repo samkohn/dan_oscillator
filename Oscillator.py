@@ -70,6 +70,15 @@ class Oscillator(object):
         self._lambdaAntiMatter = lambdaEigAnti
         self._amplFactorAntiMatter = amplFactorAnti
 
+    @classmethod
+    def fromParameterSet(cls, parameterSet, rho_e, energy):
+        "Get an oscillator using the parameters saved in parameterSet."
+        oscillator = cls(parameterSet['sinTheta12'],
+                parameterSet['sinTheta13'], parameterSet['sinTheta23'],
+                parameterSet['deltaMSq21'], parameterSet['deltaMSq32'],
+                parameterSet['deltaCP'], rho_e, energy)
+        return oscillator
+
     def _updatePMNSMatrix(self):
         "Update PMNS neutrino mixing matrix"
         s12 = self._sinTh12
