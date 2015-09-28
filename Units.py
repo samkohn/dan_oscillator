@@ -33,3 +33,4 @@ hbarc = 197.326968 * MeV * fm
 amu = 1.66053886e-27 * kg
 earthRadius = 6378.140 * km
 Gf = 1.16637e-5 * GeV**-2 * hbarc**3
+rho_e = (4.5 * g / cm**3) * (0.5 / amu)
