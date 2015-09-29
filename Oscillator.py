@@ -175,7 +175,11 @@ class Oscillator(object):
         c0 = -(self._determinant(Tm))
         c1 = (Tm[0,0]*Tm[1,1] + Tm[0,0]*Tm[2,2] + Tm[1,1]*Tm[2,2]
               - (Tm[0,1]*Tm[1,0] + Tm[0,2]*Tm[2,0] + Tm[1,2]*Tm[2,1]) )
-        # FIXME: Check that c0, c1 are real, even with complex deltaCP
+        if abs(c0.imag) > NeutrinoState._normTolerance:
+            raise ArithmeticError("c0 = %s"% c0)
+        if abs(c1.imag) > NeutrinoState._normTolerance:
+            raise ArithmeticError("c1 = %s"% c1)
+
         c0 = c0.real
         c1 = c1.real
         arcTanArg = sqrt_real(-c0*c0 - (4/27.)*c1*c1*c1) / c0
