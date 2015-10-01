@@ -1,8 +1,8 @@
 // Compile and load interface classes
 {
 
-  TString globesLibPrefix = "/Users/dandwyer/Tools/installs/globes-3.1.11/lib";  
-  TString globesIncPrefix = "/Users/dandwyer/Tools/installs/globes-3.1.11/include";  
+  TString globesLibPrefix = "/Users/skohn/Documents/DUNE/software/install/lib";
+  TString globesIncPrefix = "/Users/skohn/Documents/DUNE/software/install/include";
 
   gSystem->Load((globesLibPrefix + "/libglobes.dylib").Data());
   
