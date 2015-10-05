@@ -67,7 +67,7 @@ class OscillatorBase(object):
 
 class Oscillator(OscillatorBase):
     def __init__(self, sinTh12, sinTh13, sinTh23, 
-                 dmSq23, dmSq32, deltaCP,
+                 dmSq21, dmSq32, deltaCP,
                  rho_e, energy):
         "Constructor"
         self._sinTh12 = sinTh12
