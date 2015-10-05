@@ -47,9 +47,27 @@ class NeutrinoState(object):
         "Return true for matter, false for antimatter"
         return self._isMatter
 
-class Oscillator(object):
-    def __init__(self, sinTh12, sinTh13, sinTh23, 
+class OscillatorBase(object):
+    def __init__(self, sinTh12, sinTh13, sinTh23,
                  dmSq21, dmSq32, deltaCP,
+                 rho_e, energy):
+        pass
+
+    def evolve(self, initialState, distance):
+        pass
+
+    @classmethod
+    def fromParameterSet(cls, parameterSet, rho_e, energy):
+        "Get an oscillator using the parameters saved in parameterSet."
+        oscillator = cls(parameterSet['sinTheta12'],
+                parameterSet['sinTheta13'], parameterSet['sinTheta23'],
+                parameterSet['deltaMSq21'], parameterSet['deltaMSq32'],
+                parameterSet['deltaCP'], rho_e, energy)
+        return oscillator
+
+class Oscillator(OscillatorBase):
+    def __init__(self, sinTh12, sinTh13, sinTh23, 
+                 dmSq23, dmSq32, deltaCP,
                  rho_e, energy):
         "Constructor"
         self._sinTh12 = sinTh12
@@ -69,15 +87,6 @@ class Oscillator(object):
         [lambdaEigAnti, amplFactorAnti] = self._updateAmplitudeFactors(-1)
         self._lambdaAntiMatter = lambdaEigAnti
         self._amplFactorAntiMatter = amplFactorAnti
-
-    @classmethod
-    def fromParameterSet(cls, parameterSet, rho_e, energy):
-        "Get an oscillator using the parameters saved in parameterSet."
-        oscillator = cls(parameterSet['sinTheta12'],
-                parameterSet['sinTheta13'], parameterSet['sinTheta23'],
-                parameterSet['deltaMSq21'], parameterSet['deltaMSq32'],
-                parameterSet['deltaCP'], rho_e, energy)
-        return oscillator
 
     def _updatePMNSMatrix(self):
         "Update PMNS neutrino mixing matrix"
