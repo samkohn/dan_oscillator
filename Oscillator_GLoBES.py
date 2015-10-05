@@ -8,7 +8,7 @@
 
 
 # Useful imports
-from Oscillator import NeutrinoState
+from Oscillator import NeutrinoState, OscillatorBase
 from Units import *
 from math import sqrt
 
@@ -17,7 +17,7 @@ from ROOT import gROOT
 gROOT.ProcessLine(".x loadInterfaces.C")
 from ROOT import GLoBES_Interface
 
-class Oscillator_GLoBES(object):
+class Oscillator_GLoBES(OscillatorBase):
     def __init__(self, sinTh12, sinTh13, sinTh23, 
                  dmSq21, dmSq32, deltaCP,
                  rho_e, energy):
