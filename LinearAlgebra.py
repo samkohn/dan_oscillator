@@ -410,7 +410,9 @@ def checkList(argList, shape, dtype):
     """ Helper function to confirm proper argument list formatting """
     if len(shape) == 0:
         # Hit actual elements
-        assert type(argList+dtype()) is dtype, "Element has invalid type: %s != type( %s )" % (dtype, argList)
+        assert (issubclass(type(argList+dtype()), dtype) or
+                issubclass(dtype, type(argList+dtype()))), "Element has invalid type: %s != %s" % (dtype,
+                    type(argList + dtype()))
     else:
         assert len(argList) == shape[0], "Incorrect length: %d != len( %s )" % (shape[0], argList) 
         for element in argList:
