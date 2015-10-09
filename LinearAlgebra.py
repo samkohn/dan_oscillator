@@ -70,13 +70,13 @@ class array(object):
             # Extend data array if needed
             # (Needed when none provided, or casting to complex array)
             data.extend( [0]*(self._bufsize - len(data)) )
-        if self._dtype is IntType:
+        if issubclass(self._dtype, IntType):
             self._data = py_array('i', data)
-        elif self._dtype is LongType:
+        elif issubclass(self._dtype, LongType):
             self._data = py_array('l', data)
-        elif self._dtype is FloatType:
+        elif issubclass(self._dtype, FloatType):
             self._data = py_array('d', data)
-        elif self._dtype is ComplexType:
+        elif issubclass(self._dtype, ComplexType):
             self._data = py_array('d', data)
         else:
             assert False, "Invalid data type: %s" % self._dtype
@@ -93,7 +93,8 @@ class array(object):
             curType = type( argListRef )
             if curType is not ListType:
                 # Hit an element, check type
-                assert curType in supportedTypes, "Type %s is not supported." % curType
+                assert any([issubclass(curType, supportedType) for
+                    supportedType in supportedTypes]), "Type %s is not supported." % curType
                 dtype = curType
                 break
             # Check list length
