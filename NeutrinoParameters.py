@@ -80,7 +80,7 @@ nufit_IO = {'best':
                  'sinTheta13': 0.137113092,
                  'sinTheta23': 0.623698645,
                  'deltaMSq21': 8.09e-5 * eV**2,
-                 'deltaMSq32', -2.590e-3 * eV**2,
+                 'deltaMSq32': -2.590e-3 * eV**2,
                  'deltaCP': 0,
                  },
             }
