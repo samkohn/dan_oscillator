@@ -12,8 +12,11 @@ from sys import float_info
 from cmath import exp, sqrt
 from math import sin, cos, atan, atan2
 from math import sqrt as sqrt_real
-from LinearAlgebra import array, dot
 from Units import *
+import numpy as np
+from numpy import linalg as LA
+from numpy import array as array
+from numpy import dot as dot
 
 class NeutrinoState(object):
     _normTolerance = 1.0e-4 # Tolerance to maintain state normalization
@@ -181,40 +184,9 @@ class Oscillator(OscillatorBase):
     def _eigenvalues(self, Tm):
         "Find energy eigenvalues of 3x3 complex Hamiltonian"
         # Calculate eigenvalues
-        c0 = -(self._determinant(Tm))
-        c1 = (Tm[0,0]*Tm[1,1] + Tm[0,0]*Tm[2,2] + Tm[1,1]*Tm[2,2]
-              - (Tm[0,1]*Tm[1,0] + Tm[0,2]*Tm[2,0] + Tm[1,2]*Tm[2,1]) )
-        if abs(c0.imag) > NeutrinoState._normTolerance:
-            raise ArithmeticError("c0 = %s"% c0)
-        if abs(c1.imag) > NeutrinoState._normTolerance:
-            raise ArithmeticError("c1 = %s"% c1)
-
-        c0 = c0.real
-        c1 = c1.real
-        arcTanArg = sqrt_real(-c0*c0 - (4/27.)*c1*c1*c1) / c0
-        arcTanTerm = (1/3.)*atan(arcTanArg)
-        sqrtMC1 = sqrt_real(-c1)
-        sqrtMC1D3 = sqrtMC1/sqrt_real(3.)
-        cosATT = cos( arcTanTerm )
-        sinATT = sin( arcTanTerm )
-        # Calculate final eigenvalues
-        eigenvals = [(-sqrtMC1D3*cosATT + sqrtMC1*sinATT),
-                     (-sqrtMC1D3*cosATT - sqrtMC1*sinATT),
-                     (2*sqrtMC1D3*cosATT)]
-        if c0 > 0:
+        eigenvals = LA.eigvals(Tm)
+        if LA.det(Tm) <= 0:
             eigenvals = [-1*eigenval for eigenval in eigenvals]
-        #self._checkEigenvalues(eigenvals, Tm)
-        #eg = eigenvals
-        #if abs(eg[0]*eg[1]*eg[2] + c0) > 1.0e-5:
-        #    #if True:
-        #    TrTm = Tm[0,0]+Tm[1,1]+Tm[2,2]
-        #    print "   Bad zeros: %f %f %f %f %f" % (
-        #        TrTm.real,
-        #        TrTm.imag,
-        #        sum(eigenvals), 
-        #        eg[0]*eg[1]+eg[0]*eg[2]+eg[1]*eg[2] - c1,
-        #        eg[0]*eg[1]*eg[2] + c0)
-        #    #print "   eigen:",eigenvals
         return eigenvals
 
 
